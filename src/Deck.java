@@ -27,4 +27,16 @@ public class Deck {
     public Card getRandomCard() {
         return deck.get((int)(Math.random()*52));
     }
+
+    public void shuffle() {
+        for (int i = 0; i < 52; i++) {
+            Card temp = deck.get(i); // c = a
+            int swap = (int)(Math.random() * 52); // b
+
+            deck.set(i, deck.get(swap)); // a = b
+            deck.set(swap, temp); // b = c
+        }
+    }
 }
+
+
