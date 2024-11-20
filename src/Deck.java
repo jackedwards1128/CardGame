@@ -37,6 +37,10 @@ public class Deck {
             deck.set(swap, temp); // b = c
         }
     }
+
+    public Card remove(int index) {
+        return deck.remove(index);
+    }
 }
 
 
