@@ -4,12 +4,12 @@ public class Deck {
     private ArrayList<Card> deck;
     private static final int size = 52;
     private final String[] suits = new String[] {"Spades", "Clubs", "Hearts", "Diamonds"};
-    private final String[] ranks = new String[] {"Ace", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+    private final String[] ranks = new String[] {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven",
                                                 "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
 
     public Deck() {
         deck = new ArrayList<Card>();
-        for(int i = 0; i <= 13; i++) {
+        for(int i = 0; i <= 12; i++) {
             for (int j = 0; j < 4; j++) {
                 deck.add(new Card(ranks[i], suits[j], i));
             }

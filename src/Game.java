@@ -31,6 +31,9 @@ public class Game {
 
         for (int i = 0; i < playerCount; i++) {
             System.out.println("What is player " + (i+1) + "'s name? ");
+            if (i == 0) {
+                input.nextLine();
+            }
             String playerName = input.nextLine();
 
             players.add(new Player(playerName, i));
@@ -44,7 +47,7 @@ public class Game {
             players.get(i).createHand(pocket);
 
 
-            input.nextLine();
+            //input.nextLine();
         }
 
         showHands();
@@ -60,6 +63,7 @@ public class Game {
 
             System.out.print(players.get(i).getName() + " has a ");
             System.out.println(players.get(i).getHandString());
+            System.out.println("click enter once you done seeing your hand");
 
             input.nextLine();
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
