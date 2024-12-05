@@ -72,7 +72,7 @@ public class Game {
         for (int i = 0; i < playerCount; i++) {
             Scanner input = new Scanner(System.in);
 
-            System.out.println("click enter once you are ready to see your hand");
+            System.out.println(players.get(i).getName() + ", click enter once you are ready to see your hand");
             input.nextLine();
 
             System.out.print(players.get(i).getName() + " has a ");
@@ -155,13 +155,15 @@ public class Game {
         }
     }
 
-    private
+
 
     private static void printInstructions() {
         System.out.println("WELCOME TO POKER wahwahwahh");
     }
 
-
+    public ArrayList<Card> getMiddleCards() {
+        return middleCards;
+    }
 
     public static void main(String[] args) {
         Game poker = new Game();
