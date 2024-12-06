@@ -59,6 +59,7 @@ public class Game {
 
         // Display hands to players privately
         showHands();
+        gatherBets(0);
 
         // Flop
         flop();
@@ -130,6 +131,10 @@ public class Game {
     // Ask each player their desired move, and discern bets accordingly
     private void gatherBets(int startingSpot) {
         for(int i = startingSpot; i < playerCount; i++) {
+            // If only one person is left, skip the betting
+            if (playerCount == 1) {
+                break;
+            }
             char choice = '0';
 
             // Gather player's valid choice
@@ -186,13 +191,34 @@ public class Game {
             System.out.println(playersCopy.get(i).getHandString());
             playersCopy.get(i).determineRank(middleCards);
             System.out.println("They got a " + ranks[playersCopy.get(i).getRank()]);
-            System.out.println("They bet " + playersCopy.get(i).getBet());
+            System.out.println("They bet $" + playersCopy.get(i).getBet());
         }
     }
 
     // Print the instructions of poker
     private static void printInstructions() {
-        System.out.println("WELCOME TO POKER wahwahwahh");
+        System.out.println("\n\nWELCOME TO POKER");
+        System.out.println("After inputting the number of players and your names, you will each be able to " +
+                " privately view your hand. After viewing your pocket, ");
+        System.out.println("you will each bet on your hand. You can either fold," +
+                " check/call, or raise. Then 3 cards in the middle will be revealed, then 1 more");
+        System.out.println(", then 1 more again, for a total of 5 cards. Each time new cards are revealed, you will each" +
+                " bet on your hands again. Your goal is to");
+        System.out.println("make the best possible 5-card hand from the 5 cards" +
+                " in the middle, and the 2 cards you have in your hand. Aces are always valued as 1.");
+        System.out.println("The ranks go as following:");
+        System.out.println("<<Worst>>");
+        System.out.println("High Card");
+        System.out.println("Pair");
+        System.out.println("Two Pair");
+        System.out.println("Three of a kind");
+        System.out.println("Straight (all numbers are in an ascending order)");
+        System.out.println("Flush (all the same suit)");
+        System.out.println("Full House (three of a kind and a pair)");
+        System.out.println("Quads (four of a kind)");
+        System.out.println("Straight Flush (flush + a straight)");
+        System.out.println("Royal Flush (flush + a straight that ends with a king])");
+        System.out.println("<<Best>>\n\n");
     }
 
     // Getter
