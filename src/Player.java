@@ -40,6 +40,10 @@ public class Player {
         return order;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
     public void determineRank(ArrayList<Card> middleCards) {
         ArrayList<Card> fullHand = new ArrayList<Card>();
         fullHand.addAll(middleCards);
@@ -50,10 +54,19 @@ public class Player {
 
         // since seven choose five is the same as seven choose two, choose two indexes to skip when selecting cards
         // and cycle through all possible choices for these skips
+        rank = -1;
         for (int skipOne = 0; skipOne < 7; skipOne++) {
             int skipTwo = 0;
+            if (skipTwo == skipOne) {
+                if (skipTwo == 6) {
+                    break;
+                }
+                skipTwo++;
+            }
 
             while (true) {
+                tempFullHand.clear();
+                tempFullHand.addAll(fullHand);
 
                 ArrayList<Card> supposedHand = new ArrayList<Card>();
 
@@ -62,22 +75,33 @@ public class Player {
                     if(7 - tempFullHand.size() == skipOne || 7 - tempFullHand.size() == skipTwo) {
                         indexToAdd++;
                     }
+                    if (indexToAdd == tempFullHand.size()) {
+                        break;
+                    }
+//                    System.out.println();
+//                    System.out.println("idx2add " + indexToAdd);
+//                    System.out.println("size " + tempFullHand.size());
+//                    System.out.println("skip2 " + skipTwo);
                     supposedHand.add(tempFullHand.remove(indexToAdd));
                 }
 
 
-                rank = judgeHand(supposedHand);
+                rank = Math.max(judgeHand(supposedHand), rank);
+
 
 
                 // increment the second skip value, and make the second skip hop over the first skip if the overlap
-                // if both skips reach 6, then break out of the loop
+                // if skip would have to bunny hop out of bounds, then break out of the loop
                 skipTwo++;
                 if (skipTwo == skipOne) {
-                    if (skipTwo == 6) {
-                        break;
-                    }
                     skipTwo++;
                 }
+                if (skipTwo > 6) {
+                    break;
+                }
+
+
+
             }
 
         }
@@ -89,6 +113,114 @@ public class Player {
     }
 
     private int judgeHand(ArrayList<Card> givenHand) {
+        // 9 royal flush
+        // 8 straight flush
+        // 7 quads
+        // 6 full house
+        // 5 flush
+        // 4 straight
+        // 3 trips
+        // 2 two pair
+        // 1 pair
+        // 0 high
+        int[] frequency = new int[13];
+        boolean straight = false;
+        boolean flush = false;
+
+        for (Card Card : givenHand) {
+            frequency[Card.getValue()]++;
+        }
+
+
+        // determine presence of straight
+        int straightCounter = 0;
+        for (int i = 0; i < 13; i++) {
+            if(frequency[i] > 0) {
+                straightCounter++;
+            } else {
+                straightCounter = 0;
+            }
+
+            // if five cards in an ascending row are present, straight present
+            if(straightCounter == 5) {
+                straight = true;
+                break;
+            }
+        }
+
+//        for (Card Card : givenHand) {
+//            System.out.println(Card.toString());
+//        }
+//        System.out.println();
+
+        // determine presence of flush
+        flush = true;
+        for (int i = 1; i < 5; i++) {
+            // if the suit of the given card is not the same as the suit of the first card then no flush
+            if (!givenHand.get(i).getSuit().equals(givenHand.get(0).getSuit())) {
+                flush = false;
+                break;
+            }
+        }
+
+
+        // ROYAL FLUSH & STRAIGHT FLUSH
+        if (flush && straight) {
+            boolean royal = false;
+            for (Card Card : givenHand) {
+                if (Card.getValue() == 12) {
+                    royal = true;
+                    break;
+                }
+            }
+            if (royal) {
+                return 9;
+            } else {
+                return 8;
+            }
+        }
+
+        // QUADS, TRIPS, DUBS, 2DUBS, FULL HOUSE
+        int trips = 0;
+        int pairs = 0;
+        for (int freq : frequency) {
+            switch (freq){
+                case 4:
+                    return 7;
+                case 3:
+                    trips++;
+                    break;
+                case 2:
+                    pairs++;
+            }
+        }
+        if (trips == 1 && pairs == 1) {
+            return 6;
+        }
+        else if (trips == 1) {
+            return 3;
+        }
+        else if (pairs == 2) {
+            return 2;
+        }
+        else if (pairs == 1) {
+            return 1;
+        }
+
         return 0;
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

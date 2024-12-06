@@ -9,9 +9,11 @@ public class Game {
     private int bet;
     private ArrayList<Card> middleCards;
     private ArrayList<Player> players;
+    private ArrayList<Player> playersCopy;
 
     public Game() {
         players = new ArrayList<Player>();
+        playersCopy = new ArrayList<Player>();
         Deck deck = new Deck();
         deck.shuffle();
         this.pile = deck;
@@ -46,7 +48,7 @@ public class Game {
             pocket.add(pile.remove(0));
 
             players.get(i).createHand(pocket);
-
+            playersCopy.add(players.get(i));
 
             //input.nextLine();
         }
@@ -66,6 +68,9 @@ public class Game {
         revealCard();
         showCards();
         gatherBets(0);
+
+        // grand reveal
+        grandReveal();
     }
 
     private void showHands() {
@@ -80,9 +85,9 @@ public class Game {
             System.out.println("click enter once you done seeing your hand");
 
             input.nextLine();
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
+//            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+//            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("\n\n\n");
         }
     }
 
@@ -155,6 +160,15 @@ public class Game {
         }
     }
 
+    private void grandReveal() {
+        showCards();
+        for (int i = 0; i < playersCopy.size(); i++) {
+            System.out.print(playersCopy.get(i).getName() + " had a ");
+            System.out.println(playersCopy.get(i).getHandString());
+            playersCopy.get(i).determineRank(middleCards);
+            System.out.println("They got a " + playersCopy.get(i).getRank());
+        }
+    }
 
 
     private static void printInstructions() {
