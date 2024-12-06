@@ -18,6 +18,18 @@ public class Game {
         deck.shuffle();
         this.pile = deck;
 
+
+        pile.add(0, new Card("Seven", "Diamonds", 6));
+        pile.add(0, new Card("Six", "Diamonds", 5));
+        pile.add(0, new Card("Five", "Diamonds", 4));
+        pile.add(0, new Card("Four", "Diamonds", 3));
+        pile.add(0, new Card("Three", "Diamonds", 2));
+
+        pile.add(0, new Card("Two", "Diamonds", 1));
+        pile.add(0, new Card("Ace", "Diamonds", 0));
+
+
+
         middleCards = new ArrayList<Card>();
 
         this.beginGame();
@@ -78,13 +90,13 @@ public class Game {
             Scanner input = new Scanner(System.in);
 
             System.out.println(players.get(i).getName() + ", click enter once you are ready to see your hand");
-            input.nextLine();
+//            input.nextLine();
 
             System.out.print(players.get(i).getName() + " has a ");
             System.out.println(players.get(i).getHandString());
             System.out.println("click enter once you done seeing your hand");
 
-            input.nextLine();
+//            input.nextLine();
 //            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 //            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println("\n\n\n");
@@ -122,7 +134,8 @@ public class Game {
             while (choice != 'c' && choice != 'r' && choice != 'f') {
                 System.out.println(players.get(i).getName() + ", do you want to (f)old, (c)heck/call, or (r)aise?");
                 Scanner input = new Scanner(System.in);
-                choice = input.nextLine().charAt(0);
+//                choice = input.nextLine().charAt(0);
+                choice = 'c';
             }
 
             boolean playerFolded = false;

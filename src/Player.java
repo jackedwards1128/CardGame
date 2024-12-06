@@ -51,6 +51,10 @@ public class Player {
         ArrayList<Card> tempFullHand = new ArrayList<Card>();
         tempFullHand.addAll(fullHand);
 
+        for (Card Card : fullHand) {
+            System.out.println(Card.toString());
+        }
+
 
         // since seven choose five is the same as seven choose two, choose two indexes to skip when selecting cards
         // and cycle through all possible choices for these skips
@@ -65,7 +69,7 @@ public class Player {
             }
 
             while (true) {
-                tempFullHand.clear();
+                tempFullHand.clear();l
                 tempFullHand.addAll(fullHand);
 
                 ArrayList<Card> supposedHand = new ArrayList<Card>();
@@ -85,6 +89,8 @@ public class Player {
                     supposedHand.add(tempFullHand.remove(indexToAdd));
                 }
 
+                System.out.println(skipOne);
+                System.out.println(skipTwo);
 
                 rank = Math.max(judgeHand(supposedHand), rank);
 
@@ -105,9 +111,6 @@ public class Player {
             }
 
         }
-
-
-
 
 
     }
@@ -148,10 +151,10 @@ public class Player {
             }
         }
 
-//        for (Card Card : givenHand) {
-//            System.out.println(Card.toString());
-//        }
-//        System.out.println();
+        for (Card Card : givenHand) {
+            System.out.println(Card.toString());
+        }
+        System.out.println("\n");
 
         // determine presence of flush
         flush = true;
@@ -178,6 +181,13 @@ public class Player {
             } else {
                 return 8;
             }
+        }
+
+        if (flush) {
+            return 5;
+        }
+        if (straight) {
+            return 4;
         }
 
         // QUADS, TRIPS, DUBS, 2DUBS, FULL HOUSE

@@ -16,6 +16,10 @@ public class Deck {
         }
     }
 
+    public void add(int index, Card nCard) {
+        deck.add(index, nCard);
+    }
+
     public int getSize() {
         return size;
     }
