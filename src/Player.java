@@ -51,64 +51,44 @@ public class Player {
         ArrayList<Card> tempFullHand = new ArrayList<Card>();
         tempFullHand.addAll(fullHand);
 
-        for (Card Card : fullHand) {
-            System.out.println(Card.toString());
-        }
+//        for (Card Card : fullHand) {
+//            System.out.println(Card.toString());
+//        }
 
 
         // since seven choose five is the same as seven choose two, choose two indexes to skip when selecting cards
         // and cycle through all possible choices for these skips
         rank = -1;
         for (int skipOne = 0; skipOne < 7; skipOne++) {
-            int skipTwo = 0;
-            if (skipTwo == skipOne) {
-                if (skipTwo == 6) {
-                    break;
+            for (int skipTwo = 0; skipTwo < 7; skipTwo++) {
+                if (skipOne == skipTwo) {
+                    continue;
                 }
-                skipTwo++;
-            }
-
-            while (true) {
-                tempFullHand.clear();l
-                tempFullHand.addAll(fullHand);
-
                 ArrayList<Card> supposedHand = new ArrayList<Card>();
 
-                int indexToAdd = 0;
-                while (indexToAdd < tempFullHand.size()) {
-                    if(7 - tempFullHand.size() == skipOne || 7 - tempFullHand.size() == skipTwo) {
-                        indexToAdd++;
+                supposedHand.addAll(fullHand);
+
+
+//                System.out.println(skipOne);
+//                System.out.println(skipTwo);
+                supposedHand.set(skipOne, new Card("Ace", "Spades", -1));
+                supposedHand.set(skipTwo, new Card("Ace", "Spades", -1));
+
+                for (int i = 0; i < supposedHand.size(); i++) {
+                    if (supposedHand.get(i).getValue() == -1) {
+                        supposedHand.remove(i--);
                     }
-                    if (indexToAdd == tempFullHand.size()) {
-                        break;
-                    }
-//                    System.out.println();
-//                    System.out.println("idx2add " + indexToAdd);
-//                    System.out.println("size " + tempFullHand.size());
-//                    System.out.println("skip2 " + skipTwo);
-                    supposedHand.add(tempFullHand.remove(indexToAdd));
                 }
 
-                System.out.println(skipOne);
-                System.out.println(skipTwo);
+//                for (Card Card : supposedHand) {
+//                    System.out.println(Card.toString());
+//                }
 
                 rank = Math.max(judgeHand(supposedHand), rank);
 
-
-
-                // increment the second skip value, and make the second skip hop over the first skip if the overlap
-                // if skip would have to bunny hop out of bounds, then break out of the loop
-                skipTwo++;
-                if (skipTwo == skipOne) {
-                    skipTwo++;
-                }
-                if (skipTwo > 6) {
-                    break;
-                }
-
-
-
             }
+
+
 
         }
 
@@ -151,10 +131,10 @@ public class Player {
             }
         }
 
-        for (Card Card : givenHand) {
-            System.out.println(Card.toString());
-        }
-        System.out.println("\n");
+//        for (Card Card : givenHand) {
+//            System.out.println(Card.toString());
+//        }
+//        System.out.println("\n");
 
         // determine presence of flush
         flush = true;
